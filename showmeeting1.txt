@@ -1,0 +1,30 @@
+<?php
+
+require_once 'connection1.php';
+
+
+$connection = mysqli_connect($db_hostname, $db_username,$db_password,$db_database);
+
+if (!$connection)
+    die("Unable to connect to MySQL: " . mysqli_error($connection));
+
+$query = "SELECT * FROM meetings";
+$result = mysqli_query($connection,$query);
+
+if (!$result)
+    die("Database access failed: " . mysqli_error($connection));
+
+$html = "";
+
+while($row = mysqli_fetch_assoc($result)) {
+    $html.=$row['meeting_id'];
+    $html.=$row['meeting_description'];
+    $html.=$row['meeting_datetime'];
+    $html.=$row['meeting_duration'];
+    $html.=$row['meeting_room_id'];
+    $html.=$row['orgainzer_id'];
+}
+
+mysqli_close($connection);
+
+?>
